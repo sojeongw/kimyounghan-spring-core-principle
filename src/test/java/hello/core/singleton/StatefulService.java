@@ -8,15 +8,9 @@ import org.springframework.context.annotation.Bean;
 
 public class StatefulService {
 
-  // 상태를 유지하는 필드
-  private int price;
-
-  public void order(String name, int price) {
+  public int order(String name, int price) {
     System.out.println("name = " + name + ", price = " + price);
-    this.price = price;
 
-  }
-  public int getPrice() {
     return price;
   }
 
@@ -27,17 +21,13 @@ public class StatefulService {
     StatefulService statefulService1 = ac.getBean(StatefulService.class);
     StatefulService statefulService2 = ac.getBean(StatefulService.class);
 
-    // ThreadA: A 사용자 10000원 주문
-    statefulService1.order("userA", 10000);
+    int price1 = statefulService1.order("userA", 10000);
+    int price2 = statefulService2.order("userB", 20000);
 
-    // ThreadB: B 사용자 20000원 주문
-    statefulService2.order("userB", 20000);
+    System.out.println("price1 = " + price1);
+    System.out.println("price2 = " + price2);
 
-    // ThreadA: A 사용자 주문 금액 조회
-    int price = statefulService1.getPrice();
-    System.out.println("price = " + price);
-
-    assertThat(statefulService1.getPrice()).isEqualTo(20000);
+//    assertThat(statefulService1.getPrice()).isEqualTo(20000);
   }
 
   static class TestConfig {
