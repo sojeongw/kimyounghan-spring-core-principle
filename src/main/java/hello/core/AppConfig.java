@@ -15,16 +15,19 @@ import org.springframework.context.annotation.Configuration;
 public class AppConfig {
   @Bean
   public MemberService memberService() {
+    System.out.println("called AppConfig.memberService");
     return new MemberServiceImpl(memberRepository());
   }
 
   @Bean
   public MemberRepository memberRepository() {
+    System.out.println("called AppConfig.memberRepository");
     return new MemoryMemberRepository();
   }
 
   @Bean
   public OrderService orderService() {
+    System.out.println("called AppConfig.orderService");
     return new OrderServiceImpl(memberRepository(), discountPolicy());
   }
 
@@ -32,5 +35,4 @@ public class AppConfig {
   public DiscountPolicy discountPolicy() {
     return new RateDiscountPolicy();
   }
-
 }
