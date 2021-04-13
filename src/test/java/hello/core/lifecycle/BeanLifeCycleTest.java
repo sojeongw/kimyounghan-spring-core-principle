@@ -21,12 +21,12 @@ public class BeanLifeCycleTest{
 
   @Configuration
   static class LifeCycleConfig {
-    @Bean
+    // 각 단계에서 호출할 메서드의 이름을 넣어준다.
+    @Bean(initMethod = "init", destroyMethod = "close")
     public NetworkClient networkClient() {
       NetworkClient networkClient = new NetworkClient();
       networkClient.setUrl("http://hello-spring.dev");
       return networkClient;
     }
   }
-
 }
